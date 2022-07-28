@@ -3,6 +3,7 @@ import Card from "../ui/Card";
 import classes from "./AddUser.module.css";
 import Button from "../ui/Button";
 import ErrorModal from "../ui/ErrorModal";
+import Wrapper from "../helpers/Wrapper";
 
 function AddUser(props) {
 	const [enteredUsername, setEnteredUsername] = useState("");
@@ -45,7 +46,7 @@ function AddUser(props) {
 	}
 
 	return (
-		<div>
+		<Wrapper>
 			{error && (
 				<ErrorModal
 					onHandleError={errorHandler}
@@ -72,7 +73,7 @@ function AddUser(props) {
 					<Button type="submit">Add User</Button>
 				</form>
 			</Card>
-		</div>
+		</Wrapper>
 	);
 }
 

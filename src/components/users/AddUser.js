@@ -49,7 +49,7 @@ function AddUser(props) {
 		<Wrapper>
 			{error && (
 				<ErrorModal
-					onHandleError={errorHandler}
+					onConfirm={errorHandler}
 					title={error.title}
 					message={error.message}
 				/>

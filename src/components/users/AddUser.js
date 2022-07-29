@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Card from "../ui/Card";
 import classes from "./AddUser.module.css";
 import Button from "../ui/Button";
@@ -6,12 +6,18 @@ import ErrorModal from "../ui/ErrorModal";
 import Wrapper from "../helpers/Wrapper";
 
 function AddUser(props) {
+	const inputUsernameRef = useRef();
+	const inputAgeRef = useRef();
+
+	const [error, setError] = useState();
 	const [enteredUsername, setEnteredUsername] = useState("");
 	const [enteredAge, setEnteredAge] = useState("");
-	const [error, setError] = useState();
 
 	function addUserHandler(event) {
 		event.preventDefault();
+		setEnteredUsername(inputUsernameRef.current.value);
+		setEnteredAge(inputAgeRef.current.value);
+
 		if (
 			enteredUsername.trim().length === 0 ||
 			enteredAge.trim().length === 0
@@ -26,7 +32,7 @@ function AddUser(props) {
 		if (+enteredAge < 1) {
 			setError({
 				title: "Invalid input.",
-				message: "Please enter a valid age.",
+				message: "Please enter a valid age (age > 1).",
 			});
 			return;
 		}
@@ -35,14 +41,15 @@ function AddUser(props) {
 		setEnteredAge("");
 	}
 
+	function errorHandler() {
+		setError(null);
+	}
+
 	function usernameChangeHandler(event) {
 		setEnteredUsername(event.target.value);
 	}
 	function ageChangeHandler(event) {
 		setEnteredAge(event.target.value);
-	}
-	function errorHandler() {
-		setError(null);
 	}
 
 	return (
@@ -60,6 +67,7 @@ function AddUser(props) {
 					<input
 						id="username"
 						type="text"
+						ref={inputUsernameRef}
 						value={enteredUsername}
 						onChange={usernameChangeHandler}
 					/>
@@ -67,6 +75,7 @@ function AddUser(props) {
 					<input
 						id="age"
 						type="number"
+						ref={inputAgeRef}
 						value={enteredAge}
 						onChange={ageChangeHandler}
 					/>
